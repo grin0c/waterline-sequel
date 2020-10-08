@@ -61,7 +61,7 @@ SelectBuilder.prototype.buildSimpleSelect = function buildSimpleSelect(queryObje
   }
 
   // Escape table name
-  var tableName = utils.escapeName(self.schema[self.currentTable].tableName, self.escapeCharacter, self.schemaName);
+  var tableName = utils.escapeName(self.getTableName(), self.escapeCharacter, self.schemaName);
 
   var selectKeys = [];
   var query = 'SELECT ';
@@ -221,3 +221,9 @@ SelectBuilder.prototype.processAggregates = function processAggregates(criteria)
   query += 'FROM ' + utils.escapeName(self.schema[self.currentTable].tableName, self.escapeCharacter, self.schemaName) + ' AS ' + tableName + ' ';
   return query;
 };
+
+SelectBuilder.prototype.getTableName = function getTableName() {
+  var self = this;
+
+  return self.schema[self.currentTable].viewName || self.schema[self.currentTable].tableName
+}
